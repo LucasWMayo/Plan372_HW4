@@ -39,3 +39,7 @@ rdu_saturation_table <- rdu_routes_passengerfilter |>
   summarize(total_passenger = sum(passengers)) |>
   ungroup()
 ```
+
+```{r}
+print(rdu_saturation_table)
+```
