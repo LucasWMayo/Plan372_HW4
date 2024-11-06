@@ -36,5 +36,6 @@ rdu_routes_passengerfilter <- rdu_routes |>
 ```{r}
 rdu_saturation_table <- rdu_routes_passengerfilter |>
   group_by(origin, dest) |>
-  summarize(total_passenger = sum(passengers))
+  summarize(total_passenger = sum(passengers)) |>
+  ungroup()
 ```
