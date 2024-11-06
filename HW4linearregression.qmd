@@ -22,3 +22,19 @@ print(origin)
 ```{r}
 summary(data)
 ```
+
+```{r}
+rdu_routes <- data |>
+  filter(origin == "RDU" | dest == "RDU")
+```
+
+```{r}
+rdu_routes_passengerfilter <- rdu_routes |>
+  filter(passengers > 10000)
+```
+
+```{r}
+rdu_saturation_table <- rdu_routes_passengerfilter |>
+  group_by(origin, dest) |>
+  summarize(total_passenger = sum(passengers))
+```
