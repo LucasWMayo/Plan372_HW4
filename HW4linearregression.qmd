@@ -154,3 +154,12 @@ ggplot(data, aes(x = dest_age, y=passengers)) +
        x = "Destination Median Age",
        y = "Total Passengers")
 ```
+
+```{r}
+census_api_key("863d1963fff9954a0f7bfc13d7ea0dedc02a8034")
+
+cbsa_population <- get_acs(geography = "metropolitan statistical area/micropolitan statistical area", variables = "B01003_001", year = 2022) |>
+  rename(cbsa = GEOID, population = estimate)
+
+head(cbsa_population)
+```
