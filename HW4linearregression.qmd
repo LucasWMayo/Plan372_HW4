@@ -163,3 +163,22 @@ cbsa_population <- get_acs(geography = "metropolitan statistical area/micropolit
 
 head(cbsa_population)
 ```
+
+```{r}
+data <- data |>
+  mutate(origin_cbsa = as.character(origin_cbsa), debt_cbsa = as.character(dest_cbsa))
+```
+
+```{r}
+data <- data |>
+  left_join(cbsa_population, by = c("origin_cbsa" = "cbsa")) |>
+  rename(origin_pop = population)
+```
+
+```{r}
+data <- data |> 
+  left_join(cbsa_population, by = c("origin_cbsa" = "cbsa")) |>
+  rename(dest_pop = population)
+
+head(data)
+```
