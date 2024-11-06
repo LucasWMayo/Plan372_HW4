@@ -190,3 +190,8 @@ cbsa_summary <- data |>
 
 head(cbsa_summary)
 ```
+
+```{r}
+passenger_volume_model = lm(total_passengers~origin_pop+dest_pop+distancemiles, data = cbsa_summary)
+summary(passenger_volume_model)
+```
