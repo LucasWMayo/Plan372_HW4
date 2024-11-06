@@ -86,9 +86,33 @@ head(destination_population_data)
 
 ```{r}
 cbsa_summary <- destination_population_data |>
-  group_by(origin_cbsa, dest_cbsa) |>
+  group_by(origin_cbsa, dest_cbsa, origin_pop, dest_pop, distancemiles) |>
   summarize(total_passengers = sum(passengers), .groups = 'drop') |>
   ungroup()
 
 head(cbsa_summary)
+```
+
+```{r}
+ggplot(cbsa_summary, aes(x = dest_pop, y = total_passengers)) +
+  geom_point() +
+  labs(title = "Destination Pop vs Total Pass",
+       x = "Destination Pop",
+       y= "Total Passengers")
+```
+
+```{r}
+ggplot(cbsa_summary, aes(x = origin_pop, y = total_passengers)) +
+  geom_point() +
+  labs(title = "Origin Pop vs Total Pass",
+       x = "Origin Pop",
+       y = "Total Pass")
+```
+
+```{r}
+ggplot(cbsa_summary, aes(x = distancemiles, y = total_passengers)) +
+  geom_point() +
+  labs(title = "Distance vs Total Pass",
+       x = "Distance",
+       y = "Total Pass")
 ```
