@@ -1,0 +1,10 @@
+---
+title: "HW4"
+date: 11/6/2024
+---
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+
+```
