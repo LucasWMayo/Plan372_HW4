@@ -295,3 +295,17 @@ routes <- routes |>
   left_join(cbsa_age, by = c("dest_cbsa" = "cbsa")) |>
   rename(dest_age = median_age)
 ```
+
+```{r}
+X_new <- routes |>
+  select(origin_pop, dest_pop, origin_age, distancemiles)
+```
+
+```{r}
+routes$predicted_passengers <- predict(passenger_volume_model, newdata = X_new)
+```
+
+```{r}
+routes |>
+  select(origin_cbsa, dest_cbsa, distancemiles, predicted_passengers)
+```
