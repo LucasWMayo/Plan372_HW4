@@ -186,7 +186,8 @@ head(data)
 ```{r}
 cbsa_summary <- data |>
   group_by(origin_cbsa, dest_cbsa, origin_pop, dest_pop, distancemiles) |>
-  summarize(total_passengers = sum(passengers), .groups = 'drop')
+  summarize(total_passengers = sum(passengers), .groups = 'drop') |>
+  ungroup()
 
 head(cbsa_summary)
 ```
@@ -194,4 +195,60 @@ head(cbsa_summary)
 ```{r}
 passenger_volume_model = lm(total_passengers~origin_pop+dest_pop+distancemiles, data = cbsa_summary)
 summary(passenger_volume_model)
+```
+
+```{r}
+census_api_key("863d1963fff9954a0f7bfc13d7ea0dedc02a8034")
+
+
+cbsa_population <- get_acs(geography = "metropolitan statistical area/micropolitan statistical area", variables = "B01003_001", year = 2022) |>
+  rename(cbsa = GEOID, population = estimate)
+
+
+cbsa_age <- get_acs(geography = "metropolitan statistical area/micropolitan statistical area", variables = "B01002_001", year = 2022) |>
+  rename(cbsa = GEOID, median_age = estimate)
+
+head(cbsa_population)
+head(cbsa_age)
+```
+
+```{r}
+origin_pop <- cbsa_population |>
+  rename(origin_cbsa = cbsa, origin_pop = population)
+
+dest_pop <- cbsa_population |>
+  rename(dest_cbsa = cbsa, dest_pop = population)
+
+origin_age <- cbsa_age |>
+  rename(origin_cbsa = cbsa, origin_age = median_age)
+
+dest_age <- cbsa_age |>
+  rename(dest_cbsa = cbsa, dest_age = median_age)
+```
+
+```{r}
+data <- data |>
+  left_join(origin_pop, by = "origin_cbsa") |>
+  left_join(dest_pop, by = "dest_cbsa")
+
+data <- data |>
+  left_join(origin_age, by = "origin_cbsa") |>
+  left_join(dest_age, by = "dest_cbsa")
+
+head(data)
+```
+
+```{r}
+cbsa_summary <- data |>
+  group_by(origin_cbsa, dest_cbsa, origin_pop, dest_pop, origin_age, dest_age, distancemiles) |>
+  summarize(total_passengers = sum(passengers), .groups = 'drop')
+
+head(cbsa_summary)
+```
+
+```{r}
+#extra credit actual regression attempt
+extra_credit_regression = lm(total_passengers~origin_pop+dest_pop+origin_age+dest_age+distancemiles, data = cbsa_summary)
+summary(extra_credit_regression)
+
 ```
