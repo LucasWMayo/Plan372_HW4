@@ -252,3 +252,7 @@ extra_credit_regression = lm(total_passengers~origin_pop+dest_pop+origin_age+des
 summary(extra_credit_regression)
 
 ```
+
+```{r}
+routes <- data.frame(origin_cbsa = c(39580, 39580, 39580, 39580, 38900, 21340, 45220, 40900), dest_cbsa = c(38900, 21340, 45220, 40900, 39580, 39580, 39580, 39580), distancemiles = c(2363, 1606, 496, 2345, 2363, 1606, 496, 2345))
+```
