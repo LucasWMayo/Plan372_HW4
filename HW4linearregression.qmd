@@ -182,3 +182,11 @@ data <- data |>
 
 head(data)
 ```
+
+```{r}
+cbsa_summary <- data |>
+  group_by(origin_cbsa, dest_cbsa, origin_pop, dest_pop, distancemiles) |>
+  summarize(total_passengers = sum(passengers), .groups = 'drop')
+
+head(cbsa_summary)
+```
