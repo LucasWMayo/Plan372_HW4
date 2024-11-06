@@ -138,3 +138,19 @@ data <- data |>
   left_join(cbsa_age, by = c("dest_cbsa" = "cbsa")) |>
   rename(dest_age = median_age)
 ```
+
+```{r}
+ggplot(data, aes(x = origin_age, y=passengers)) +
+  geom_point() +
+  labs(title = "Origin Age vs Total Pass",
+       x = "Origin Median Age",
+       y = "Total Passengers")
+```
+
+```{r}
+ggplot(data, aes(x = dest_age, y=passengers)) +
+  geom_point() +
+  labs(title = "Destination Age vs Total Pass",
+       x = "Destination Median Age",
+       y = "Total Passengers")
+```
