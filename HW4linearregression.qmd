@@ -130,3 +130,11 @@ cbsa_age <- get_acs(geography = "metropolitan statistical area/micropolitan stat
 head(cbsa_age)
 
 ```
+
+```{r}
+data <- data |>
+  left_join(cbsa_age, by = c("origin_cbsa" = "cbsa")) |>
+  rename(origin_age = median_age) |>
+  left_join(cbsa_age, by = c("dest_cbsa" = "cbsa")) |>
+  rename(dest_age = median_age)
+```
