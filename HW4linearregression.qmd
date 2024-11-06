@@ -8,3 +8,17 @@ library(tidyverse)
 library(ggthemes)
 
 ```
+
+```{r}
+data = read_csv(here::here("airport_pairs.csv"))
+head(data)
+
+```
+
+```{r}
+print(origin)
+```
+
+```{r}
+summary(data)
+```
