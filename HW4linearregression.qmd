@@ -254,5 +254,44 @@ summary(extra_credit_regression)
 ```
 
 ```{r}
+census_api_key("863d1963fff9954a0f7bfc13d7ea0dedc02a8034")
+
+cbsa_population <- get_acs(geography = "metropolitan statistical area/micropolitan statistical area", 
+                           variables = "B01003_001", year = 2022) |>
+  rename(cbsa = GEOID, population = estimate)
+
+cbsa_age <- get_acs(geography = "metropolitan statistical area/micropolitan statistical area", 
+                    variables = "B01002_001", year = 2022) |>
+  rename(cbsa = GEOID, median_age = estimate)
+
+head(cbsa_population)
+head(cbsa_age)
+```
+
+```{r}
+cbsa_population <- cbsa_population |>
+  mutate(cbsa = as.character(cbsa))
+
+cbsa_age <- cbsa_age |>
+  mutate(cbsa = as.character(cbsa))
+```
+
+```{r}
 routes <- data.frame(origin_cbsa = c(39580, 39580, 39580, 39580, 38900, 21340, 45220, 40900), dest_cbsa = c(38900, 21340, 45220, 40900, 39580, 39580, 39580, 39580), distancemiles = c(2363, 1606, 496, 2345, 2363, 1606, 496, 2345))
+
+routes <- routes |>
+  mutate(origin_cbsa = as.character(origin_cbsa),
+         dest_cbsa = as.character(dest_cbsa))
+```
+
+```{r}
+routes <- routes |>
+  left_join(cbsa_population, by = c("origin_cbsa" = "cbsa")) |>
+  rename(origin_pop = population) |>
+  left_join(cbsa_population, by = c("dest_cbsa" = "cbsa")) |>
+  rename(dest_pop = population) |>
+  left_join(cbsa_age, by = c("origin_cbsa" = "cbsa")) |>
+  rename(origin_age = median_age) |>
+  left_join(cbsa_age, by = c("dest_cbsa" = "cbsa")) |>
+  rename(dest_age = median_age)
 ```
