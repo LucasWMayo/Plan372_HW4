@@ -43,3 +43,16 @@ rdu_saturation_table <- rdu_routes_passengerfilter |>
 ```{r}
 print(rdu_saturation_table)
 ```
+
+```{r}
+install.packages("tidycensus")
+
+```
+
+```{r}
+library(tidycensus)
+```
+
+```{r}
+census_api_key("863d1963fff9954a0f7bfc13d7ea0dedc02a8034")
+```
