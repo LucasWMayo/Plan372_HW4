@@ -229,34 +229,29 @@ dest_age <- cbsa_age |>
   rename(dest_cbsa = cbsa, dest_age = median_age)
 ```
 
-```{# Convert origin_cbsa and dest_cbsa to character type in the data frame}
-data <- data %>%
+```{r}
+data <- data
   mutate(origin_cbsa = as.character(origin_cbsa),
          dest_cbsa = as.character(dest_cbsa))
 
-# Merge population data for origin CBSA and rename immediately
-data <- data %>%
-  # Drop any existing column with the same name if it exists
-  select(-origin_pop, -population, -dest_pop) %>%
-  left_join(cbsa_population, by = c("origin_cbsa" = "cbsa")) %>%
+data <- data |>
+  select(-origin_pop, -population, -dest_pop) |>
+  left_join(cbsa_population, by = c("origin_cbsa" = "cbsa")) |>
   rename(origin_pop = population)
 
-# Merge population data for destination CBSA and rename immediately
-data <- data %>%
-  select(-dest_pop, -population) %>%
-  left_join(cbsa_population, by = c("dest_cbsa" = "cbsa")) %>%
+data <- data |>
+  select(-dest_pop, -population) |>
+  left_join(cbsa_population, by = c("dest_cbsa" = "cbsa")) |>
   rename(dest_pop = population)
 
-# Merge median age data for origin CBSA and rename immediately
-data <- data %>%
-  select(-origin_age, -median_age) %>%
-  left_join(cbsa_age, by = c("origin_cbsa" = "cbsa")) %>%
+data <- data |>
+  select(-origin_age, -median_age) |>
+  left_join(cbsa_age, by = c("origin_cbsa" = "cbsa")) |>
   rename(origin_age = median_age)
 
-# Merge median age data for destination CBSA and rename immediately
-data <- data %>%
-  select(-dest_age, -median_age) %>%
-  left_join(cbsa_age, by = c("dest_cbsa" = "cbsa")) %>%
+data <- data |>
+  select(-dest_age, -median_age) |>
+  left_join(cbsa_age, by = c("dest_cbsa" = "cbsa")) |>
   rename(dest_age = median_age)
 
 head(data)
